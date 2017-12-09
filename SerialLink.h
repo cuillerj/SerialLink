@@ -15,6 +15,8 @@ Written by Jean Cuiller
  dans la phase d'init le master scrute le reseau a la recherche de stations dans la limite de MaxStations via le commande FF
  attend en retour FFAMessK (K = 1) Mess = type du recepteur 
  // numerique 3 5 6 utilise par virtuallib
+
+ release note 19/11/2017 active status end serial end added
  */
 //  needed for RF434 network  >>
 #ifndef SerialLink_h_included
@@ -34,11 +36,14 @@ void DataToSendSerial();
 void SendSecuSerial();
 void ReSendSecuSerial();
 void SerialBegin();
+void SerialEnd();
+boolean SerialActive();
 int Serial_have_message();
 uint8_t CheckUnitIndSerial();
-uint8_t addrSSerial=0x01; // station address par defaut
-uint8_t addrMSerial=0x00;  // adresse Master 
-uint8_t addrRSerial=0x00;  // destinataire
+uint8_t addrSSerial=0x01; // station address par defaut used for rf433 network
+#define frameSwitch addrSSerial  // can be used with serial  Wifi gateway for instance ad a frame number
+uint8_t addrMSerial=0x00;  // adresse Master used for rf433 network
+//uint8_t addrRSerial=0x00;  // destinataire
 uint8_t cmdeSerial=0x00;  // commande (FF init comm, EF polling
 uint8_t acqSerial=0x00;   // acq de la commande 
 uint8_t dlenSerial=0x00;  // data length (start 6th Byte not longer than 30 Bytes)
@@ -56,6 +61,7 @@ uint8_t lastReceivedNumberSerial=0x00;
 uint8_t acqRSerial=0x00;
 uint8_t frameFlag=0x00; 
 uint8_t _serialNumber;
+boolean _active=false;         // added 19/11/2017
 unsigned int _speedNetwSerial;
 int frameLen=0;
 int frameCount=0;

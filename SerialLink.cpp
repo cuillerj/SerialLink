@@ -15,6 +15,7 @@ Written by Jean Cuiller
 SerialLink::SerialLink (unsigned int serialSpeed)
 {
 	_speedNetwSerial = serialSpeed;
+	_active=false; // added the 19/11/2017
 }
 
 void SerialLink::SerialBegin(){
@@ -31,8 +32,28 @@ void SerialLink::SerialBegin(){
 #else
 		Serial.begin(_speedNetwSerial);
 #endif
+	_active=true; // added the 19/11/2017
 }
-
+void SerialLink::SerialEnd(){  // added the 19/11/2017
+#if defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)
+	#if defined(serial1)
+		Serial1.end();
+	#endif
+	#if defined(serial2)
+		Serial2.end();
+	#endif
+	#if defined(serial3)
+		Serial3.end();
+	#endif
+#else
+		Serial.end();
+#endif
+	_active=false; 
+}
+boolean SerialLink::SerialActive() // added the 19/11/2017
+{
+	return _active;
+ }
 void SerialLink::DataToSendSerial(){
 
  if (ConnectedSerial!=0x00 )

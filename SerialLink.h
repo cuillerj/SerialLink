@@ -41,7 +41,7 @@ boolean SerialActive();
 int Serial_have_message();
 uint8_t CheckUnitIndSerial();
 uint8_t addrSSerial=0x01; // station address par defaut used for rf433 network
-#define frameSwitch addrSSerial  // can be used with serial  Wifi gateway for instance ad a frame number
+#define frameSwitch addrSSerial  // can be used with serial  Wifi gateway for instance add a frame number
 uint8_t addrMSerial=0x00;  // adresse Master used for rf433 network
 //uint8_t addrRSerial=0x00;  // destinataire
 uint8_t cmdeSerial=0x00;  // commande (FF init comm, EF polling

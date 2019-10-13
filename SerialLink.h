@@ -21,6 +21,7 @@ Written by Jean Cuiller
 //  needed for RF434 network  >>
 #ifndef SerialLink_h_included
 #define SerialLink_h_included
+#define minReqSerial 7    // define minimum data lengh
 #define sizeReqSerial 30    // define maximum data lengh
 #define sizeInputSerial 30    // define maximum data lengh
 #include <SerialLinkParameters.h>
@@ -38,6 +39,7 @@ void ReSendSecuSerial();
 void SerialBegin();
 void SerialEnd();
 boolean SerialActive();
+uint8_t SerialNumber();
 int Serial_have_message();
 uint8_t CheckUnitIndSerial();
 uint8_t addrSSerial=0x01; // station address par defaut used for rf433 network
@@ -49,10 +51,10 @@ uint8_t acqSerial=0x00;   // acq de la commande
 uint8_t dlenSerial=0x00;  // data length (start 6th Byte not longer than 30 Bytes)
 uint8_t StationTypeSerial=0x00; // type of station 
 uint8_t PendingReqSerial=0x00; // pending request (if 0x00 none)
-uint8_t PendingDataReqSerial[sizeReqSerial]; // pending data request to send master
+uint8_t PendingDataReqSerial[sizeReqSerial+2]; // pending data request to send master
 uint8_t PendingDataLenSerial;
 uint8_t PendingSecReqSerial=0x00; // pending request (if 0x00 none) - copie pour retry
-uint8_t PendingSecDataReqSerial[sizeReqSerial]; // pending data request to send master- copie pour retry
+uint8_t PendingSecDataReqSerial[sizeReqSerial+2]; // pending data request to send master- copie pour retry
 uint8_t PendingSecDataLenSerial;
 uint8_t pendingNumberSerial=0x00;
 uint8_t lastSentNumberSerial=0x00;
@@ -62,6 +64,9 @@ uint8_t acqRSerial=0x00;
 uint8_t frameFlag=0x00; 
 uint8_t _serialNumber;
 boolean _active=false;         // added 19/11/2017
+#define toAckFrame true
+#define noAckFrame false
+#define routeFrame 0x01
 unsigned int _speedNetwSerial;
 int frameLen=0;
 int frameCount=0;

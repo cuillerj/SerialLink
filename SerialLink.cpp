@@ -9,9 +9,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Written by Jean Cuiller
 */
+/* 17/09/2019 serial number function added
+*/
 #include <Arduino.h>
 #include <SerialLink.h>
-
 SerialLink::SerialLink (unsigned int serialSpeed)
 {
 	_speedNetwSerial = serialSpeed;
@@ -21,17 +22,22 @@ SerialLink::SerialLink (unsigned int serialSpeed)
 void SerialLink::SerialBegin(){
 #if defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)
 	#if defined(serial1)
+		_serialNumber=1;
 		Serial1.begin(_speedNetwSerial);
 	#endif
 	#if defined(serial2)
+		_serialNumber=2;
 		Serial2.begin(_speedNetwSerial);
 	#endif
 	#if defined(serial3)
+		_serialNumber=3;
 		Serial3.begin(_speedNetwSerial);
 	#endif
 #else
+		_serialNumber=1;
 		Serial.begin(_speedNetwSerial);
 #endif
+	delay(100);
 	_active=true; // added the 19/11/2017
 }
 void SerialLink::SerialEnd(){  // added the 19/11/2017
@@ -53,6 +59,10 @@ void SerialLink::SerialEnd(){  // added the 19/11/2017
 boolean SerialLink::SerialActive() // added the 19/11/2017
 {
 	return _active;
+ }
+ uint8_t SerialLink::SerialNumber() // added the 19/11/2017
+{
+	return _serialNumber;
  }
 void SerialLink::DataToSendSerial(){
 

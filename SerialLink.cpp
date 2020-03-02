@@ -20,7 +20,7 @@ SerialLink::SerialLink (unsigned int serialSpeed)
 }
 
 void SerialLink::SerialBegin(){
-#if defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)
+#if (defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)) && not defined(esp8266Shield)
 	#if defined(serial1)
 		_serialNumber=1;
 		Serial1.begin(_speedNetwSerial);
@@ -41,7 +41,7 @@ void SerialLink::SerialBegin(){
 	_active=true; // added the 19/11/2017
 }
 void SerialLink::SerialEnd(){  // added the 19/11/2017
-#if defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)
+#if (defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)) && not defined(esp8266Shield)
 	#if defined(serial1)
 		Serial1.end();
 	#endif
@@ -113,7 +113,8 @@ void SerialLink::DataToSendSerial(){
 		}
 		Serial.println();
 #endif
-#if defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280_)
+
+#if (defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)) && not defined(esp8266Shield)
 	#if defined(serial1)
 		Serial1.write((uint8_t *)msgSerial,9+DataLenSerial);
 	#endif
@@ -139,7 +140,6 @@ void SerialLink::DataToSendSerial(){
     }
   }
 }
-
 
 uint8_t SerialLink::CheckUnitIndSerial()
 {
@@ -180,7 +180,7 @@ void SerialLink::ReSendSecuSerial(){
   }
   int SerialLink::Serial_have_message(){
 	  int len=0;
-#if defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280_)
+#if (defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)) && not defined(esp8266Shield)
 	#if defined(serial1)
 	    if (Serial1.available() )
 	#endif
@@ -194,7 +194,7 @@ void SerialLink::ReSendSecuSerial(){
 	    if (Serial.available() )
 #endif
   {
-#if defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280_)
+#if (defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)) && not defined(esp8266Shield)
 	#if defined(serial1)
     while (Serial1.available())
 	#endif
@@ -208,7 +208,7 @@ void SerialLink::ReSendSecuSerial(){
     while (Serial.available())
 #endif
     {
-#if defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280_)
+#if (defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)) && not defined(esp8266Shield)
 	#if defined(serial1)
       byte In1 = (Serial1.read());
 	#endif
